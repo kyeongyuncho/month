@@ -19,7 +19,7 @@
     <div class="header-left">
       <button class="menu-toggle" id="sidebarToggle" aria-label="사이드바 열기/닫기"><span></span></button>
       <div class="brand">
-        <div class="brand-logo">식</div>
+        <!--<div class="brand-logo">식</div>-->
         <div class="brand-name">식생활안전관리원</div>
       </div>
     </div>
@@ -27,14 +27,16 @@
     <div class="header-center">
       <div class="header-divider"></div>
       <div class="service-logo">
+        <!--
         <div class="cci">C</div>
         <div class="service-title">
-          <div class="kr">어린이·사회복지급식관리지원센터</div>
+        
+        <div class="kr">어린이·사회복지급식관리지원센터</div>
           <div class="en">Center for Children's and Social Welfare Foodservice Management</div>
         </div>
       </div>
       <div class="portal-tag">업무포털(EIP)</div>
-    </div>
+    </div>-->
 
     <nav class="header-right">
       <button class="icon-btn active" id="btnCheckin">
@@ -118,17 +120,135 @@
             <div class="sub-menu-item" data-panel="grace">출근유예 관리</div>
             <div class="sub-menu-item" data-panel="ip">접속 IP 관리</div>
             <div class="sub-menu-item" data-panel="concurrent">겸직 센터 관리</div>
+            <div class="sub-menu-item" data-panel="salary">급여관리</div>
             <div class="sub-menu-item" data-panel="changelog">등록변경사항</div>
-          </nav>
+                  </nav>
 
           <!-- 실제 기능 패널: 앞으로 계속 채워나갈 영역 -->
           <section class="panel">
             <div class="panel-heading" id="panelTitle">센터 담당자</div>
             <div id="panel-content">
-              <div class="placeholder-box">
-                여기에 "센터 담당자" 표/기능을 계속 추가해 나가면 됩니다.<br>
-                (id="panel-content" 안에 원하는 HTML을 채워 넣으세요)
-              </div>
+              <div class="payroll-wrap">
+
+  <!-- 상단: 대상자 / 귀속월 선택 -->
+  <div class="payroll-toolbar">
+    <div class="payroll-select-group">
+      <label>직원</label>
+      <select id="pr-employee">
+        <option value="101002024006" data-base="3200000">김영아 (경영기획팀 / 팀원)</option>
+        <option value="101002023011" data-base="3500000">김다은 (식생활정책연구팀 / 팀원)</option>
+        <option value="101002019002" data-base="4800000">최경아 (급식기준지원팀 / 팀장)</option>
+      </select>
+    </div>
+    <div class="payroll-select-group">
+      <label>귀속월</label>
+      <select id="pr-month">
+        <option>2026-08</option>
+        <option>2026-07</option>
+        <option>2026-06</option>
+      </select>
+    </div>
+    <div class="payroll-status" id="pr-status">임시저장</div>
+  </div>
+
+  <div class="payroll-grid">
+
+    <!-- 좌측: 지급 항목 -->
+    <div class="payroll-card">
+      <div class="payroll-card-head">
+        <span class="payroll-card-title">지급 항목</span>
+        <button type="button" class="payroll-btn-add" id="pr-add-pay">+ 수당 추가</button>
+      </div>
+
+      <table class="payroll-table" id="pr-pay-table">
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th class="num">금액</th>
+            <th class="tag-col">비과세</th>
+            <th class="del-col"></th>
+          </tr>
+        </thead>
+        <tbody id="pr-pay-body">
+          <!-- JS 렌더링 -->
+        </tbody>
+      </table>
+
+      <div class="payroll-subtotal">
+        <span>지급 총액</span>
+        <span id="pr-pay-total">0원</span>
+      </div>
+    </div>
+
+    <!-- 우측: 공제 항목 -->
+    <div class="payroll-card">
+      <div class="payroll-card-head">
+        <span class="payroll-card-title">공제 항목</span>
+        <label class="payroll-toggle">
+          <input type="checkbox" id="pr-auto-calc" checked>
+          <span>자동 계산</span>
+        </label>
+      </div>
+
+      <table class="payroll-table" id="pr-ded-table">
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th class="num">금액</th>
+            <th class="tag-col">요율</th>
+          </tr>
+        </thead>
+        <tbody id="pr-ded-body">
+          <!-- JS 렌더링 -->
+        </tbody>
+      </table>
+
+      <div class="payroll-subtotal">
+        <span>공제 총액</span>
+        <span id="pr-ded-total">0원</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단: 실지급액 요약 -->
+  <div class="payroll-summary">
+    <div class="payroll-summary-item">
+      <span>지급 총액</span>
+      <b id="pr-sum-pay">0원</b>
+    </div>
+    <div class="payroll-summary-item">
+      <span>공제 총액</span>
+      <b id="pr-sum-ded">0원</b>
+    </div>
+    <div class="payroll-summary-item payroll-summary-net">
+      <span>실지급액</span>
+      <b id="pr-sum-net">0원</b>
+    </div>
+  </div>
+
+  <div class="payroll-actions">
+    <button type="button" class="payroll-btn-outline" id="pr-preview">급여명세서 미리보기</button>
+    <button type="button" class="payroll-btn-primary" id="pr-save">저장</button>
+  </div>
+
+  <!-- 급여명세서 미리보기 모달 -->
+  <div class="payroll-modal-overlay" id="pr-modal-overlay">
+    <div class="payroll-modal">
+      <div class="payroll-modal-head">
+        <span>급여명세서</span>
+        <button type="button" id="pr-modal-close">×</button>
+      </div>
+      <div class="payroll-modal-body" id="pr-modal-body">
+        <!-- JS 렌더링 -->
+      </div>
+      <div class="payroll-modal-foot">
+        <button type="button" class="payroll-btn-outline" id="pr-modal-print">인쇄</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
             </div>
           </section>
         </div>
