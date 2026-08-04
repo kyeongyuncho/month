@@ -1,15 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>내 홈페이지</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업무포털(EIP)</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>안녕하세요!</h1>
+  <!-- 최상단 알림 스트립 -->
+  <div class="top-strip">
+    <span id="welcomeMsg">조경윤님 환영합니다.</span>
+    <span id="loginStatus">출근 시각: -- : -- : -- &nbsp;&nbsp;[로그인 만료:59:55]</span>
+  </div>
 
-<h2>조경윤 홈페이지입니다.</h2>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-left">
+      <button class="menu-toggle" id="sidebarToggle" aria-label="사이드바 열기/닫기"><span></span></button>
+      <div class="brand">
+        <div class="brand-logo">식</div>
+        <div class="brand-name">식생활안전관리원</div>
+      </div>
+    </div>
 
+    <div class="header-center">
+      <div class="header-divider"></div>
+      <div class="service-logo">
+        <div class="cci">C</div>
+        <div class="service-title">
+          <div class="kr">어린이·사회복지급식관리지원센터</div>
+          <div class="en">Center for Children's and Social Welfare Foodservice Management</div>
+        </div>
+      </div>
+      <div class="portal-tag">업무포털(EIP)</div>
+    </div>
+
+    <nav class="header-right">
+      <button class="icon-btn active" id="btnCheckin">
+        <span class="icon-circle">⏻</span>출근
+      </button>
+      <button class="icon-btn"><span class="icon-circle">✉</span>이메일</button>
+      <button class="icon-btn"><span class="icon-circle">🌐</span>그룹웨어</button>
+      <button class="icon-btn"><span class="icon-circle">🎓</span>LMS</button>
+      <button class="icon-btn"><span class="icon-circle">🍽</span>식단작성</button>
+      <button class="icon-btn"><span class="icon-circle">🔒</span>SSO</button>
+      <button class="icon-btn"><span class="icon-circle">📇</span>관리자</button>
+      <button class="icon-btn"><span class="icon-circle">☆</span>즐겨찾기</button>
+      <button class="icon-btn" id="btnLogout"><span class="icon-circle">⎋</span>로그아웃</button>
+    </nav>
+  </header>
+
+  <!-- 상단 탭 -->
+  <div class="tab-bar" id="tabBar">
+    <div class="tab" data-tab="dashboard">대시보드</div>
+    <div class="tab active" data-tab="center-info">센터정보관리 <span class="close">×</span></div>
+  </div>
+
+  <div class="app-body">
+
+    <!-- 좌측 메인 사이드바 -->
+    <aside class="sidebar" id="sidebar">
+      <div class="profile-card">
+        <span class="profile-settings">⚙</span>
+        <div class="profile-avatar">👤</div>
+        <div class="profile-name">조경윤(ky0335)</div>
+        <div class="profile-meta">
+          식생활안전관리원<br>
+          경영기획팀 / 팀원
+        </div>
+        <div class="attend-row">
+          <button class="attend-btn checkin" id="checkinBtn">출근 --:--</button>
+          <button class="attend-btn" id="checkoutBtn">퇴근 --:--</button>
+        </div>
+        <div class="work-info">
+          근무유형: <b>정상근무</b><br>
+          근무시간: <b>09:00 ~ 18:00</b><br>
+          등록 IP 주소: 172.16.10.28<br>
+          접속 IP 주소: 172.16.10.28
+        </div>
+      </div>
+
+      <div class="nav-section-title" data-target="navAdmin">
+        <span>행정</span><span class="chev">▾</span>
+      </div>
+      <ul class="nav-list" id="navAdmin">
+        <li class="nav-item active">센터정보관리</li>
+        <li class="nav-item">사용자 관리</li>
+        <li class="nav-item">인사정보 관리</li>
+        <li class="nav-item">인사발령 관리</li>
+        <li class="nav-item">나의 인사정보</li>
+        <li class="nav-item">증명서 발급</li>
+        <li class="nav-item">비상연락망</li>
+        <li class="nav-item">면허증·자격증 현황</li>
+        <li class="nav-item">이용약관 및 처리지침</li>
+      </ul>
+    </aside>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main-content">
+      <div class="content-frame">
+        <div class="breadcrumb-bar">
+          <span>&lt;</span>
+          <span>센터 정보 관리 : 식생활안전관리원</span>
+        </div>
+
+        <div class="content-body">
+          <!-- 서브 메뉴: 여기 항목을 추가/수정하며 기능을 확장 -->
+          <nav class="sub-menu" id="subMenu">
+            <div class="sub-menu-item" data-panel="basic">기본 정보</div>
+            <div class="sub-menu-item" data-panel="profile">센터장 프로필</div>
+            <div class="sub-menu-item" data-panel="dept">센터 부서</div>
+            <div class="sub-menu-item active" data-panel="staff">센터 담당자</div>
+            <div class="sub-menu-item" data-panel="flextime">근무시간(유연근무)</div>
+            <div class="sub-menu-item" data-panel="special">특화사업</div>
+            <div class="sub-menu-item" data-panel="holiday">임시공휴일 관리</div>
+            <div class="sub-menu-item" data-panel="grace">출근유예 관리</div>
+            <div class="sub-menu-item" data-panel="ip">접속 IP 관리</div>
+            <div class="sub-menu-item" data-panel="concurrent">겸직 센터 관리</div>
+            <div class="sub-menu-item" data-panel="changelog">등록변경사항</div>
+          </nav>
+
+          <!-- 실제 기능 패널: 앞으로 계속 채워나갈 영역 -->
+          <section class="panel">
+            <div class="panel-heading" id="panelTitle">센터 담당자</div>
+            <div id="panel-content">
+              <div class="placeholder-box">
+                여기에 "센터 담당자" 표/기능을 계속 추가해 나가면 됩니다.<br>
+                (id="panel-content" 안에 원하는 HTML을 채워 넣으세요)
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script src="script.js"></script>
 </body>
 </html>
