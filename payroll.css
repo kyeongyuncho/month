@@ -1,0 +1,457 @@
+/* =====================================================
+   급여 관리 (Payroll) — 기존 style.css의 CSS 변수를 그대로 사용합니다.
+   :root 변수(--navy-800, --blue-accent, --gray-*, --radius 등)가
+   먼저 로드되어 있어야 합니다.
+   ===================================================== */
+
+.payroll-wrap{
+  padding: 4px 2px 8px;
+}
+
+/* ---------- 공통 툴바 ---------- */
+.payroll-toolbar{
+  display:flex;
+  align-items:flex-end;
+  gap:20px;
+  margin-bottom:20px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--gray-200);
+}
+.payroll-select-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.payroll-select-group label{
+  font-size:12px;
+  color:var(--gray-700);
+}
+.payroll-select-group select,
+.payroll-select-group input[type="text"]{
+  padding:8px 10px;
+  border:1px solid var(--gray-300);
+  border-radius:var(--radius);
+  font-size:13px;
+  color:var(--text-900);
+  background:var(--white);
+  min-width:190px;
+}
+.payroll-static-text{
+  padding:8px 2px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--text-900);
+}
+.payroll-status{
+  margin-left:auto;
+  font-size:12px;
+  font-weight:700;
+  color:var(--gray-700);
+  background:var(--gray-100);
+  padding:6px 12px;
+  border-radius:14px;
+  align-self:center;
+}
+.payroll-status.saved{
+  color:#1c7a3c;
+  background:#e6f6ea;
+}
+.payroll-hint{
+  font-size:11.5px;
+  color:var(--gray-500);
+}
+
+/* ---------- 현황표 (리스트 뷰) ---------- */
+.payroll-list-table thead th{
+  background:var(--gray-50);
+}
+.payroll-list-table tbody tr{
+  cursor:pointer;
+}
+.payroll-list-table tbody tr:hover{
+  background:#eaf1fc;
+}
+.payroll-list-table td{
+  padding:10px 8px;
+}
+.payroll-list-table td.num{
+  text-align:right;
+  font-weight:700;
+}
+
+/* ---------- 상세 뷰 뒤로가기 ---------- */
+.payroll-btn-back{
+  border:none;
+  background:transparent;
+  color:var(--blue-accent);
+  font-size:13px;
+  font-weight:700;
+  padding:4px 0 14px;
+}
+.payroll-btn-back:hover{ text-decoration:underline; }
+
+/* ---------- 지급 / 공제 카드 ---------- */
+.payroll-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.payroll-card{
+  border:1px solid var(--gray-200);
+  border-radius:var(--radius);
+  background:var(--white);
+  padding:16px 18px 18px;
+}
+.payroll-card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+.payroll-card-title{
+  font-weight:700;
+  font-size:14px;
+  color:var(--text-900);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.payroll-card-title::before{
+  content:"";
+  width:4px;height:14px;
+  background:var(--blue-accent);
+  display:inline-block;
+  border-radius:2px;
+}
+.payroll-btn-add{
+  border:1px solid var(--blue-accent);
+  color:var(--blue-accent);
+  background:var(--white);
+  font-size:12px;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:var(--radius);
+}
+.payroll-btn-add:hover{ background:#eaf1fc; }
+
+/* ---------- 표 ---------- */
+.payroll-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.payroll-table thead th{
+  text-align:left;
+  font-size:11.5px;
+  color:var(--gray-500);
+  font-weight:700;
+  padding:6px 4px;
+  border-bottom:1px solid var(--gray-200);
+}
+.payroll-table thead th.num{ text-align:right; }
+.payroll-table thead th.tag-col{ width:70px; text-align:center; }
+.payroll-table thead th.rate-col{ width:90px; text-align:center; }
+.payroll-table thead th.del-col{ width:28px; }
+
+.payroll-table tbody td{
+  padding:7px 4px;
+  border-bottom:1px solid var(--gray-100);
+  vertical-align:middle;
+}
+.payroll-table tbody tr:last-child td{ border-bottom:none; }
+
+.payroll-row-name{
+  width:100%;
+  border:none;
+  background:transparent;
+  font-size:13px;
+  color:var(--text-900);
+  padding:4px 2px;
+}
+.payroll-row-name:disabled{ color:var(--gray-700); }
+.payroll-row-name:focus{ outline:none; border-bottom:1px solid var(--blue-accent); }
+
+.payroll-row-amount{
+  width:100%;
+  text-align:right;
+  border:1px solid var(--gray-200);
+  border-radius:4px;
+  padding:6px 8px;
+  font-size:13px;
+  color:var(--text-900);
+}
+.payroll-row-amount:disabled{
+  background:var(--gray-50);
+  color:var(--gray-700);
+  border-color:var(--gray-100);
+}
+.payroll-row-amount:focus{ outline:none; border-color:var(--blue-accent); }
+
+.payroll-row-rate{
+  width:100%;
+  text-align:center;
+  border:1px solid var(--gray-300);
+  border-radius:4px;
+  padding:6px 4px;
+  font-size:13px;
+  color:var(--text-900);
+}
+.payroll-row-rate:focus{ outline:none; border-color:var(--blue-accent); }
+
+.payroll-ded-amount{
+  display:block;
+  text-align:right;
+  font-size:13px;
+  color:var(--text-900);
+  padding:6px 4px;
+}
+
+.payroll-tag{
+  display:inline-block;
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:10px;
+  background:var(--gray-100);
+  color:var(--gray-700);
+  text-align:center;
+}
+.payroll-tag.on{ background:#e6f6ea; color:#1c7a3c; }
+
+.payroll-row-del{
+  border:none;
+  background:transparent;
+  color:var(--gray-500);
+  font-size:14px;
+}
+.payroll-row-del:hover{ color:#c0392b; }
+
+/* ---------- 소계 ---------- */
+.payroll-subtotal{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--gray-200);
+  font-size:13px;
+  color:var(--gray-700);
+}
+.payroll-subtotal span:last-child{
+  font-weight:700;
+  color:var(--text-900);
+  font-size:14px;
+}
+
+/* ---------- 실지급액 요약 바 ---------- */
+.payroll-summary{
+  display:flex;
+  gap:14px;
+  margin-top:18px;
+}
+.payroll-summary-item{
+  flex:1;
+  background:var(--gray-50);
+  border-radius:var(--radius);
+  padding:14px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.payroll-summary-item span{
+  font-size:12px;
+  color:var(--gray-700);
+}
+.payroll-summary-item b{
+  font-size:18px;
+  color:var(--text-900);
+}
+.payroll-summary-net{
+  background:var(--navy-800);
+}
+.payroll-summary-net span{ color:#c6d5ea; }
+.payroll-summary-net b{ color:#fff; font-size:22px; }
+
+/* ---------- 액션 버튼 ---------- */
+.payroll-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:18px;
+}
+.payroll-btn-outline,
+.payroll-btn-primary{
+  padding:10px 18px;
+  border-radius:var(--radius);
+  font-size:13px;
+  font-weight:700;
+}
+.payroll-btn-outline{
+  border:1px solid var(--gray-300);
+  background:var(--white);
+  color:var(--gray-700);
+}
+.payroll-btn-outline:hover{ background:var(--gray-50); }
+.payroll-btn-primary{
+  border:1px solid var(--navy-800);
+  background:var(--navy-800);
+  color:#fff;
+}
+.payroll-btn-primary:hover{ background:var(--navy-900); }
+
+/* ---------- 모달 공통 ---------- */
+.payroll-modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(15,25,45,.45);
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+.payroll-modal-overlay.open{ display:flex; }
+.payroll-modal{
+  width:420px;
+  max-height:80vh;
+  overflow-y:auto;
+  background:var(--white);
+  border-radius:var(--radius);
+}
+.payroll-modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 18px;
+  background:var(--navy-800);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  position:sticky;
+  top:0;
+}
+.payroll-modal-head button{
+  border:none;background:transparent;color:#fff;font-size:18px;
+}
+.payroll-modal-body{ padding:18px; font-size:13px; }
+.payroll-modal-row{
+  display:flex;justify-content:space-between;padding:6px 0;
+  border-bottom:1px dashed var(--gray-200);
+}
+.payroll-modal-row.net{
+  border-bottom:none;
+  border-top:2px solid var(--text-900);
+  margin-top:8px;padding-top:12px;
+  font-weight:700;font-size:15px;
+}
+.payroll-modal-foot{
+  padding:12px 18px;
+  border-top:1px solid var(--gray-200);
+  display:flex;justify-content:flex-end;
+  align-items:center;
+  gap:8px;
+}
+
+/* ---------- 급여명세서 모달 (회사 서식 영역) ---------- */
+.payroll-payslip-modal{ width:480px; }
+.payslip-form{
+  border:1px solid var(--gray-300);
+}
+.payslip-form-head{
+  text-align:center;
+  padding:14px;
+  border-bottom:2px solid var(--text-900);
+}
+.payslip-form-head .title{ font-size:16px; font-weight:700; letter-spacing:2px; }
+.payslip-form-head .sub{ font-size:11px; color:var(--gray-700); margin-top:4px; }
+.payslip-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--gray-300);
+}
+.payslip-meta div{
+  padding:8px 12px;
+  font-size:12px;
+  border-right:1px solid var(--gray-200);
+}
+.payslip-meta div:last-child{ border-right:none; }
+.payslip-meta b{ display:block; font-size:13px; margin-top:2px; }
+.payslip-cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+.payslip-cols .col{ padding:0; }
+.payslip-cols .col + .col{ border-left:1px solid var(--gray-300); }
+.payslip-cols .col-title{
+  background:var(--gray-50);
+  font-size:12px;
+  font-weight:700;
+  padding:6px 12px;
+  border-bottom:1px solid var(--gray-300);
+}
+.payslip-row{
+  display:flex;justify-content:space-between;
+  padding:6px 12px;font-size:12px;
+  border-bottom:1px solid var(--gray-100);
+}
+.payslip-net{
+  padding:12px;
+  text-align:center;
+  background:var(--gray-50);
+  border-top:2px solid var(--text-900);
+  font-size:14px;font-weight:700;
+}
+.payslip-note{
+  margin-top:10px;
+  font-size:11px;
+  color:var(--gray-500);
+  text-align:center;
+}
+
+/* ---------- 이메일 발송 모달 ---------- */
+.payroll-field{ margin-bottom:12px; }
+.payroll-field label{
+  display:block;
+  font-size:12px;
+  color:var(--gray-700);
+  margin-bottom:6px;
+}
+.payroll-field input,
+.payroll-field textarea{
+  width:100%;
+  border:1px solid var(--gray-300);
+  border-radius:var(--radius);
+  padding:8px 10px;
+  font-size:13px;
+  font-family:inherit;
+  color:var(--text-900);
+}
+.payroll-field textarea{ resize:vertical; }
+.payroll-field-note{
+  font-size:11.5px;
+  color:var(--gray-500);
+}
+
+/* ---------- 공제 요율 설정 모달 ---------- */
+.rate-setting-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 0;
+  border-bottom:1px solid var(--gray-100);
+}
+.rate-setting-row label{ font-size:13px; color:var(--text-900); }
+.rate-setting-row input{
+  width:80px;
+  text-align:right;
+  border:1px solid var(--gray-300);
+  border-radius:4px;
+  padding:6px 8px;
+  font-size:13px;
+}
+
+/* ---------- 반응형 ---------- */
+@media (max-width: 760px){
+  .payroll-grid{ grid-template-columns:1fr; }
+  .payroll-summary{ flex-direction:column; }
+  .payslip-cols{ grid-template-columns:1fr; }
+  .payslip-cols .col + .col{ border-left:none; border-top:1px solid var(--gray-300); }
+}

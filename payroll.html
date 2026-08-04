@@ -1,0 +1,201 @@
+<!--
+  급여 관리 - panel-content 스니펫 (v2)
+  - #pr-list-view   : 전체 직원 급여 현황표 (기본 화면)
+  - #pr-detail-view : 특정 직원 상세 급여 입력/계산 화면 (현황표 행 클릭 시 표시)
+
+  필요 참조:
+    <link rel="stylesheet" href="payroll.css">
+    <script src="payroll.js"></script>
+-->
+
+<div class="payroll-wrap">
+
+  <!-- ===================== 리스트 뷰 ===================== -->
+  <div id="pr-list-view">
+
+    <div class="payroll-toolbar">
+      <div class="payroll-select-group">
+        <label>귀속월</label>
+        <select id="pr-list-month">
+          <option>2026-08</option>
+          <option>2026-07</option>
+          <option>2026-06</option>
+        </select>
+      </div>
+      <div class="payroll-select-group" style="flex:1;">
+        <label>&nbsp;</label>
+        <input type="text" id="pr-list-search" placeholder="직원명 검색">
+      </div>
+      <button type="button" class="payroll-btn-outline" id="pr-rate-setting">공제 요율 설정</button>
+    </div>
+
+    <table class="payroll-table payroll-list-table">
+      <thead>
+        <tr>
+          <th>귀속연/월</th>
+          <th>직원명</th>
+          <th>소속</th>
+          <th>직위</th>
+          <th class="num">지급 총액</th>
+        </tr>
+      </thead>
+      <tbody id="pr-list-body">
+        <!-- JS 렌더링 -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===================== 상세 뷰 (기존 급여 계산 화면) ===================== -->
+  <div id="pr-detail-view" style="display:none;">
+
+    <button type="button" class="payroll-btn-back" id="pr-back-to-list">&larr; 현황표로 돌아가기</button>
+
+    <div class="payroll-toolbar">
+      <div class="payroll-select-group">
+        <label>직원</label>
+        <div id="pr-employee-name" class="payroll-static-text"></div>
+      </div>
+      <div class="payroll-select-group">
+        <label>귀속월</label>
+        <div id="pr-detail-month" class="payroll-static-text"></div>
+      </div>
+      <div class="payroll-status" id="pr-status">임시저장</div>
+    </div>
+
+    <div class="payroll-grid">
+
+      <!-- 좌측: 지급 항목 -->
+      <div class="payroll-card">
+        <div class="payroll-card-head">
+          <span class="payroll-card-title">지급 항목</span>
+          <button type="button" class="payroll-btn-add" id="pr-add-pay">+ 수당 추가</button>
+        </div>
+
+        <table class="payroll-table" id="pr-pay-table">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th class="num">금액</th>
+              <th class="tag-col">비과세</th>
+              <th class="del-col"></th>
+            </tr>
+          </thead>
+          <tbody id="pr-pay-body"></tbody>
+        </table>
+
+        <div class="payroll-subtotal">
+          <span>지급 총액</span>
+          <span id="pr-pay-total">0원</span>
+        </div>
+      </div>
+
+      <!-- 우측: 공제 항목 -->
+      <div class="payroll-card">
+        <div class="payroll-card-head">
+          <span class="payroll-card-title">공제 항목</span>
+          <span class="payroll-hint">요율은 담당자가 직접 입력합니다</span>
+        </div>
+
+        <table class="payroll-table" id="pr-ded-table">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th class="rate-col">요율(%)</th>
+              <th class="num">금액</th>
+            </tr>
+          </thead>
+          <tbody id="pr-ded-body"></tbody>
+        </table>
+
+        <div class="payroll-subtotal">
+          <span>공제 총액</span>
+          <span id="pr-ded-total">0원</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단: 실지급액 요약 -->
+    <div class="payroll-summary">
+      <div class="payroll-summary-item">
+        <span>지급 총액</span>
+        <b id="pr-sum-pay">0원</b>
+      </div>
+      <div class="payroll-summary-item">
+        <span>공제 총액</span>
+        <b id="pr-sum-ded">0원</b>
+      </div>
+      <div class="payroll-summary-item payroll-summary-net">
+        <span>실지급액</span>
+        <b id="pr-sum-net">0원</b>
+      </div>
+    </div>
+
+    <div class="payroll-actions">
+      <button type="button" class="payroll-btn-outline" id="pr-preview">급여명세서 미리보기</button>
+      <button type="button" class="payroll-btn-primary" id="pr-save">저장</button>
+    </div>
+  </div>
+
+  <!-- ===================== 공제 요율 기본값 설정 모달 ===================== -->
+  <div class="payroll-modal-overlay" id="pr-rate-modal-overlay">
+    <div class="payroll-modal">
+      <div class="payroll-modal-head">
+        <span>공제 요율 기본값 설정</span>
+        <button type="button" id="pr-rate-modal-close">&times;</button>
+      </div>
+      <div class="payroll-modal-body" id="pr-rate-modal-body">
+        <!-- JS 렌더링 -->
+      </div>
+      <div class="payroll-modal-foot">
+        <button type="button" class="payroll-btn-primary" id="pr-rate-modal-save">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 급여명세서 미리보기 모달 ===================== -->
+  <div class="payroll-modal-overlay" id="pr-modal-overlay">
+    <div class="payroll-modal payroll-payslip-modal">
+      <div class="payroll-modal-head">
+        <span>급여명세서</span>
+        <button type="button" id="pr-modal-close">&times;</button>
+      </div>
+      <div class="payroll-modal-body" id="pr-modal-body">
+        <!-- JS 렌더링: 회사 서식 영역 -->
+      </div>
+      <div class="payroll-modal-foot">
+        <button type="button" class="payroll-btn-outline" id="pr-email-open">이메일 발송</button>
+        <button type="button" class="payroll-btn-outline" id="pr-modal-print">인쇄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 이메일 발송 모달 ===================== -->
+  <div class="payroll-modal-overlay" id="pr-email-modal-overlay">
+    <div class="payroll-modal">
+      <div class="payroll-modal-head">
+        <span>급여명세서 이메일 발송</span>
+        <button type="button" id="pr-email-modal-close">&times;</button>
+      </div>
+      <div class="payroll-modal-body">
+        <div class="payroll-field">
+          <label>받는사람</label>
+          <input type="email" id="pr-email-to" placeholder="employee@ccfsm.or.kr">
+        </div>
+        <div class="payroll-field">
+          <label>제목</label>
+          <input type="text" id="pr-email-subject">
+        </div>
+        <div class="payroll-field">
+          <label>본문</label>
+          <textarea id="pr-email-body" rows="5"></textarea>
+        </div>
+        <div class="payroll-field-note">급여명세서 PDF가 첨부되어 발송됩니다.</div>
+      </div>
+      <div class="payroll-modal-foot">
+        <span id="pr-email-status" class="payroll-hint"></span>
+        <button type="button" class="payroll-btn-primary" id="pr-email-send">발송</button>
+      </div>
+    </div>
+  </div>
+
+</div>
