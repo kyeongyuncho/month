@@ -1,7 +1,8 @@
 <!--
-  급여 관리 - panel-content 스니펫 (v2)
-  - #pr-list-view   : 전체 직원 급여 현황표 (기본 화면)
-  - #pr-detail-view : 특정 직원 상세 급여 입력/계산 화면 (현황표 행 클릭 시 표시)
+  급여 관리 - panel-content 스니펫 (v3)
+  - #pr-list-view    : 전체 직원 급여 현황표 (기본 화면)
+  - #pr-ledger-view  : 급여대장 (직원×월별 저장 이력 조회)
+  - #pr-detail-view  : 특정 직원 상세 급여 입력/계산 화면 (프로필 헤더 포함)
 
   필요 참조:
     <link rel="stylesheet" href="payroll.css">
@@ -26,6 +27,9 @@
         <label>&nbsp;</label>
         <input type="text" id="pr-list-search" placeholder="직원명 검색">
       </div>
+      <button type="button" class="payroll-btn-outline" id="pr-ledger-open">급여대장</button>
+      <button type="button" class="payroll-btn-outline" id="pr-salary-setting">직원별 연봉 설정</button>
+      <button type="button" class="payroll-btn-outline" id="pr-payitem-setting">지급 항목 설정</button>
       <button type="button" class="payroll-btn-outline" id="pr-rate-setting">공제 요율 설정</button>
     </div>
 
@@ -45,21 +49,74 @@
     </table>
   </div>
 
-  <!-- ===================== 상세 뷰 (기존 급여 계산 화면) ===================== -->
-  <div id="pr-detail-view" style="display:none;">
+  <!-- ===================== 급여대장 뷰 ===================== -->
+  <div id="pr-ledger-view" style="display:none;">
 
-    <button type="button" class="payroll-btn-back" id="pr-back-to-list">&larr; 현황표로 돌아가기</button>
+    <button type="button" class="payroll-btn-back" id="pr-ledger-back">&larr; 현황표로 돌아가기</button>
 
     <div class="payroll-toolbar">
       <div class="payroll-select-group">
         <label>직원</label>
-        <div id="pr-employee-name" class="payroll-static-text"></div>
+        <select id="pr-ledger-employee">
+          <option value="">전체</option>
+        </select>
       </div>
       <div class="payroll-select-group">
         <label>귀속월</label>
-        <div id="pr-detail-month" class="payroll-static-text"></div>
+        <select id="pr-ledger-month">
+          <option value="">전체</option>
+        </select>
       </div>
-      <div class="payroll-status" id="pr-status">임시저장</div>
+    </div>
+
+    <table class="payroll-table payroll-list-table">
+      <thead>
+        <tr>
+          <th>귀속연/월</th>
+          <th>직원명</th>
+          <th>소속</th>
+          <th class="num">지급 총액</th>
+          <th class="num">공제 총액</th>
+          <th class="num">실지급액</th>
+          <th>저장일시</th>
+        </tr>
+      </thead>
+      <tbody id="pr-ledger-body">
+        <!-- JS 렌더링 -->
+      </tbody>
+    </table>
+
+    <div class="placeholder-box" id="pr-ledger-empty" style="display:none;margin-top:14px;">
+      아직 저장된 급여대장이 없습니다. 상세 화면에서 "저장"을 누르면 이곳에 쌓입니다.
+    </div>
+  </div>
+
+  <!-- ===================== 상세 뷰 ===================== -->
+  <div id="pr-detail-view" style="display:none;">
+
+    <button type="button" class="payroll-btn-back" id="pr-back-to-list">&larr; 현황표로 돌아가기</button>
+
+    <!-- 직원 프로필 헤더
+         TODO: 인사정보 시스템 연동 시 이 블록의 텍스트/사진을 API 응답으로 교체하세요.
+         (예: GET /api/employees/{id} → { photoUrl, name, dept, jikchaek, jikwi, hobong }) -->
+    <div class="payroll-profile-header">
+      <div class="payroll-profile-photo" id="pr-profile-photo">?</div>
+      <div class="payroll-profile-info">
+        <div class="payroll-profile-name" id="pr-profile-name">-</div>
+        <div class="payroll-profile-meta">
+          <span><i>소속</i><b id="pr-profile-dept">-</b></span>
+          <span><i>직책</i><b id="pr-profile-jikchaek">-</b></span>
+          <span><i>직위</i><b id="pr-profile-jikwi">-</b></span>
+          <span><i>호봉</i><b id="pr-profile-hobong">-</b></span>
+        </div>
+      </div>
+      <div class="payroll-profile-side">
+        <div class="payroll-select-group">
+          <label>귀속월</label>
+          <div id="pr-detail-month" class="payroll-static-text"></div>
+        </div>
+        <div class="payroll-status" id="pr-status">임시저장</div>
+      </div>
     </div>
 
     <div class="payroll-grid">
@@ -136,18 +193,55 @@
     </div>
   </div>
 
-  <!-- ===================== 공제 요율 기본값 설정 모달 ===================== -->
+  <!-- ===================== 공제 요율 설정 모달 ===================== -->
   <div class="payroll-modal-overlay" id="pr-rate-modal-overlay">
     <div class="payroll-modal">
       <div class="payroll-modal-head">
         <span>공제 요율 기본값 설정</span>
         <button type="button" id="pr-rate-modal-close">&times;</button>
       </div>
-      <div class="payroll-modal-body" id="pr-rate-modal-body">
-        <!-- JS 렌더링 -->
-      </div>
+      <div class="payroll-modal-body" id="pr-rate-modal-body"></div>
       <div class="payroll-modal-foot">
         <button type="button" class="payroll-btn-primary" id="pr-rate-modal-save">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 지급 항목(분류코드) 설정 모달 ===================== -->
+  <div class="payroll-modal-overlay" id="pr-payitem-modal-overlay">
+    <div class="payroll-modal">
+      <div class="payroll-modal-head">
+        <span>지급 항목 기본값 설정</span>
+        <button type="button" id="pr-payitem-modal-close">&times;</button>
+      </div>
+      <div class="payroll-modal-body">
+        <div class="payroll-field-note" style="margin-bottom:10px;">
+          여기서 추가/수정한 항목은 모든 직원의 급여 상세 화면에 기본으로 적용됩니다.
+        </div>
+        <div id="pr-payitem-modal-body"></div>
+        <button type="button" class="payroll-btn-add" id="pr-payitem-add" style="margin-top:10px;">+ 항목 추가</button>
+      </div>
+      <div class="payroll-modal-foot">
+        <button type="button" class="payroll-btn-primary" id="pr-payitem-modal-save">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 직원별 연봉 설정 모달 ===================== -->
+  <div class="payroll-modal-overlay" id="pr-salary-modal-overlay">
+    <div class="payroll-modal">
+      <div class="payroll-modal-head">
+        <span>직원별 연봉 설정</span>
+        <button type="button" id="pr-salary-modal-close">&times;</button>
+      </div>
+      <div class="payroll-modal-body">
+        <div class="payroll-field-note" style="margin-bottom:10px;">
+          월 급여 화면의 기본급은 연봉 ÷ 12로 자동 계산됩니다.
+        </div>
+        <div id="pr-salary-modal-body"></div>
+      </div>
+      <div class="payroll-modal-foot">
+        <button type="button" class="payroll-btn-primary" id="pr-salary-modal-save">저장</button>
       </div>
     </div>
   </div>
@@ -159,9 +253,7 @@
         <span>급여명세서</span>
         <button type="button" id="pr-modal-close">&times;</button>
       </div>
-      <div class="payroll-modal-body" id="pr-modal-body">
-        <!-- JS 렌더링: 회사 서식 영역 -->
-      </div>
+      <div class="payroll-modal-body" id="pr-modal-body"></div>
       <div class="payroll-modal-foot">
         <button type="button" class="payroll-btn-outline" id="pr-email-open">이메일 발송</button>
         <button type="button" class="payroll-btn-outline" id="pr-modal-print">인쇄</button>
