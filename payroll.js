@@ -16,6 +16,10 @@
   const fmt = (n) => Math.round(n).toLocaleString('ko-KR') + '원';
   const round10 = (n) => Math.round(n / 10) * 10;
 
+  // 입력창용: 숫자 → "3,200,000" 문자열, 문자열 → 숫자로 변환
+  const formatNum = (n) => Math.round(n).toLocaleString('ko-KR');
+  const parseNum = (str) => Number(String(str).replace(/[^0-9-]/g, '')) || 0;
+
   /* -------------------------------------------------
      0. 기본 데이터 (실제로는 서버/DB 및 인사정보 시스템에서 받아와야 함)
      ------------------------------------------------- */
