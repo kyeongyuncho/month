@@ -33,9 +33,9 @@
   // 지급 항목 마스터(분류코드) - "지급 항목 설정" 모달에서 관리.
   // key:'base'는 기본급 전용 코드로, amount는 항상 연봉÷12로 자동 계산되며 수정 불가(locked)입니다.
   let payItemCodes = [
-    { key:'base',            name:'기본급',          defaultAmount:0,      taxFree:false, locked:true  },
-    { key:'meal',             name:'급식비',          defaultAmount:200000, taxFree:true,  locked:false },
-    { key:'posAllowance',     name:'직급보조비',      defaultAmount:150000, taxFree:false, locked:false },
+    { key:'base',             name:'기본급',          defaultAmount:0,      taxFree:false, locked:true  },
+    { key:'meal',             name:'급식비',          defaultAmount:0,      taxFree:true,  locked:false },
+    { key:'posAllowance',     name:'직급보조비',      defaultAmount:0,      taxFree:false, locked:false },
     { key:'overtime',         name:'연장근로수당',    defaultAmount:0,      taxFree:false, locked:false },
     { key:'family',           name:'가족수당',        defaultAmount:0,      taxFree:false, locked:false },
     { key:'annualLeaveComp',  name:'연차휴가보상수당', defaultAmount:0,      taxFree:false, locked:false },
@@ -46,10 +46,11 @@
   // TODO: 인사정보 연동 시 photo(사진 URL), jikchaek(직책), jikwi(직위), hobong(호봉)을
   //       GET /api/employees 응답 필드로 교체하세요.
   let employees = [
-    { id:'101002024006', name:'김영아', dept:'경영기획팀',       jikchaek:'팀원', jikwi:'주임', hobong:3, annualSalary:38400000, email:'michaela@ccfsm.or.kr', photo:null },
-    { id:'101002023011', name:'김다은', dept:'식생활정책연구팀', jikchaek:'팀원', jikwi:'사원', hobong:1, annualSalary:42000000, email:'kimvv369@ccfsm.or.kr', photo:null },
-    { id:'101002019002', name:'최경아', dept:'급식기준지원팀',   jikchaek:'팀장', jikwi:'과장', hobong:7, annualSalary:57600000, email:'intelly24@ccfsm.or.kr', photo:null },
-    { id:'101002021004', name:'심재은', dept:'경영기획팀',       jikchaek:'팀장', jikwi:'과장', hobong:9, annualSalary:62400000, email:'simppong@ccfsm.or.kr', photo:null },
+    { id:'101002024006', name:'심재운', dept:'경영기획팀',       jikchaek:'팀장', jikwi:'책임', hobong:3, annualSalary:50000000, email:'000@ccfsm.or.kr', photo:null },
+    { id:'101002023011', name:'유정미', dept:'경영기획팀',      jikchaek:'팀원', jikwi:'주임', hobong:1, annualSalary:40000000, email:'000@ccfsm.or.kr', photo:null },
+    { id:'101002019002', name:'김성연', dept:'경영기획팀',        jikchaek:'팀원', jikwi:'주임', hobong:7, annualSalary:30000000, email:'000@ccfsm.or.kr', photo:null },
+    { id:'101002021004', name:'김준석', dept:'경영기획팀',       jikchaek:'팀원', jikwi:'주임', hobong:9, annualSalary:20000000, email:'000@ccfsm.or.kr', photo:null },
+    { id:'101002021004', name:'조경윤', dept:'경영기획팀',       jikchaek:'팀원', jikwi:'주임', hobong:9, annualSalary:10000000, email:'000@ccfsm.or.kr', photo:null },
   ];
 
   // 급여대장 - "저장" 시 직원×귀속월 단위로 upsert됩니다. (실제로는 서버 DB에 저장)
@@ -104,9 +105,9 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${month}</td>
-          <td>${e.name}</td>
           <td>${e.dept}</td>
           <td>${e.jikchaek}</td>
+          <td>${e.name}</td>
           <td class="num">${fmt(estimatedPayTotal(e))}</td>
         `;
         tr.addEventListener('click', () => openDetail(e, month));
