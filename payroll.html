@@ -18,14 +18,9 @@
       <div class="payroll-select-group">
         <label>귀속월</label>
         <select id="pr-list-month">
+          <option>2026-08</option>
           <option>2026-07</option>
           <option>2026-06</option>
-          <option>2026-05</option>
-          <option>2026-04</option>
-          <option>2026-03</option>
-          <option>2026-02</option>
-          <option>2026-01</option>
-
         </select>
       </div>
       <div class="payroll-select-group" style="flex:1;">
@@ -33,7 +28,7 @@
         <input type="text" id="pr-list-search" placeholder="직원명 검색">
       </div>
       <button type="button" class="payroll-btn-outline" id="pr-ledger-open">급여대장</button>
-      <button type="button" class="payroll-btn-outline" id="pr-salary-setting">직원별 연봉 설정</button>
+      <button type="button" class="payroll-btn-outline" id="pr-salary-setting">직원별 급여 항목 설정</button>
       <button type="button" class="payroll-btn-outline" id="pr-payitem-setting">지급 항목 설정</button>
       <button type="button" class="payroll-btn-outline" id="pr-rate-setting">공제 요율 설정</button>
     </div>
@@ -42,9 +37,9 @@
       <thead>
         <tr>
           <th>귀속연/월</th>
+          <th>직원명</th>
           <th>소속</th>
           <th>직위</th>
-          <th>직원명</th>
           <th class="num">지급 총액</th>
         </tr>
       </thead>
@@ -221,7 +216,9 @@
       </div>
       <div class="payroll-modal-body">
         <div class="payroll-field-note" style="margin-bottom:10px;">
-          여기서 추가/수정한 항목은 모든 직원의 급여 상세 화면에 기본으로 적용됩니다.
+          여기서는 <b>지급 항목의 종류</b>(이름, 비과세 여부)만 관리합니다. 항목별 실제 지급 금액은 직원마다 달라서
+          "직원별 급여 항목 설정"에서 각각 입력합니다. 아래 "기본값"은 새 항목을 추가할 때 직원들에게 우선 채워지는
+          초기값일 뿐이며, 이후 직원별로 자유롭게 수정할 수 있습니다.
         </div>
         <div id="pr-payitem-modal-body"></div>
         <button type="button" class="payroll-btn-add" id="pr-payitem-add" style="margin-top:10px;">+ 항목 추가</button>
@@ -232,16 +229,17 @@
     </div>
   </div>
 
-  <!-- ===================== 직원별 연봉 설정 모달 ===================== -->
+  <!-- ===================== 직원별 급여 항목 설정 모달 ===================== -->
   <div class="payroll-modal-overlay" id="pr-salary-modal-overlay">
-    <div class="payroll-modal">
+    <div class="payroll-modal payroll-modal-wide">
       <div class="payroll-modal-head">
-        <span>직원별 연봉 설정</span>
+        <span>직원별 급여 항목 설정</span>
         <button type="button" id="pr-salary-modal-close">&times;</button>
       </div>
       <div class="payroll-modal-body">
         <div class="payroll-field-note" style="margin-bottom:10px;">
-          월 급여 화면의 기본급은 연봉 ÷ 12로 자동 계산됩니다.
+          직원마다 연봉과 항목별 지급 금액이 다르므로 여기서 직접 입력합니다.
+          월 급여 화면의 기본급은 연봉 ÷ 12로 자동 계산되어 별도 입력이 필요 없습니다.
         </div>
         <div id="pr-salary-modal-body"></div>
       </div>

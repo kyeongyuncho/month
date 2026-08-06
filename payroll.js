@@ -37,9 +37,9 @@
   // 지급 항목 마스터(분류코드) - "지급 항목 설정" 모달에서 관리.
   // key:'base'는 기본급 전용 코드로, amount는 항상 연봉÷12로 자동 계산되며 수정 불가(locked)입니다.
   let payItemCodes = [
-    { key:'base',             name:'기본급',          defaultAmount:0,      taxFree:false, locked:true  },
-    { key:'meal',             name:'급식비',          defaultAmount:0,      taxFree:true,  locked:false },
-    { key:'posAllowance',     name:'직급보조비',      defaultAmount:0,      taxFree:false, locked:false },
+    { key:'base',            name:'기본급',          defaultAmount:0,      taxFree:false, locked:true  },
+    { key:'meal',             name:'급식비',          defaultAmount:200000, taxFree:true,  locked:false },
+    { key:'posAllowance',     name:'직급보조비',      defaultAmount:150000, taxFree:false, locked:false },
     { key:'overtime',         name:'연장근로수당',    defaultAmount:0,      taxFree:false, locked:false },
     { key:'family',           name:'가족수당',        defaultAmount:0,      taxFree:false, locked:false },
     { key:'annualLeaveComp',  name:'연차휴가보상수당', defaultAmount:0,      taxFree:false, locked:false },
@@ -47,14 +47,19 @@
   ];
 
   // 직원 목록 (샘플 데이터 - 실제로는 인사정보 시스템 API로 대체)
+  // allowances: 지급 항목별 "이 직원만의" 실제 금액. key는 payItemCodes의 key와 매칭됩니다.
+  //             (기본급은 항상 연봉÷12로 자동 계산되므로 여기 포함하지 않습니다)
   // TODO: 인사정보 연동 시 photo(사진 URL), jikchaek(직책), jikwi(직위), hobong(호봉)을
   //       GET /api/employees 응답 필드로 교체하세요.
   let employees = [
-    { id:'101002024006', name:'심재운', dept:'경영기획팀',       jikchaek:'팀장', jikwi:'책임', hobong:3, annualSalary:50000000, email:'000@ccfsm.or.kr', photo:null },
-    { id:'101002023011', name:'유정미', dept:'경영기획팀',      jikchaek:'팀원', jikwi:'주임', hobong:1, annualSalary:40000000, email:'000@ccfsm.or.kr', photo:null },
-    { id:'101002019002', name:'김성연', dept:'경영기획팀',        jikchaek:'팀원', jikwi:'주임', hobong:7, annualSalary:30000000, email:'000@ccfsm.or.kr', photo:null },
-    { id:'101002021004', name:'김준석', dept:'경영기획팀',       jikchaek:'팀원', jikwi:'주임', hobong:9, annualSalary:20000000, email:'000@ccfsm.or.kr', photo:null },
-    { id:'101002021004', name:'조경윤', dept:'경영기획팀',       jikchaek:'팀원', jikwi:'주임', hobong:9, annualSalary:10000000, email:'000@ccfsm.or.kr', photo:null },
+    { id:'101002024006', name:'김영아', dept:'경영기획팀',       jikchaek:'팀원', jikwi:'주임', hobong:3, annualSalary:38400000, email:'michaela@ccfsm.or.kr', photo:null,
+      allowances:{ meal:200000, posAllowance:150000, overtime:0,      family:0,      annualLeaveComp:0, unpaidLeave:0 } },
+    { id:'101002023011', name:'김다은', dept:'식생활정책연구팀', jikchaek:'팀원', jikwi:'사원', hobong:1, annualSalary:42000000, email:'kimvv369@ccfsm.or.kr', photo:null,
+      allowances:{ meal:200000, posAllowance:100000, overtime:50000, family:0,      annualLeaveComp:0, unpaidLeave:0 } },
+    { id:'101002019002', name:'최경아', dept:'급식기준지원팀',   jikchaek:'팀장', jikwi:'과장', hobong:7, annualSalary:57600000, email:'intelly24@ccfsm.or.kr', photo:null,
+      allowances:{ meal:200000, posAllowance:200000, overtime:0,      family:100000, annualLeaveComp:0, unpaidLeave:0 } },
+    { id:'101002021004', name:'심재은', dept:'경영기획팀',       jikchaek:'팀장', jikwi:'과장', hobong:9, annualSalary:62400000, email:'simppong@ccfsm.or.kr', photo:null,
+      allowances:{ meal:200000, posAllowance:250000, overtime:0,      family:150000, annualLeaveComp:0, unpaidLeave:0 } },
   ];
 
   // 급여대장 - "저장" 시 직원×귀속월 단위로 upsert됩니다. (실제로는 서버 DB에 저장)
@@ -74,12 +79,17 @@
   }
 
   function buildDefaultPayItems(employee){
-    return payItemCodes.map(code => ({
-      name: code.name,
-      amount: code.key === 'base' ? monthlyBaseOf(employee) : code.defaultAmount,
-      taxFree: code.taxFree,
-      locked: code.locked,
-    }));
+    return payItemCodes.map(code => {
+      let amount;
+      if (code.key === 'base') {
+        amount = monthlyBaseOf(employee);
+      } else if (employee.allowances && employee.allowances[code.key] !== undefined) {
+        amount = employee.allowances[code.key]; // 이 직원만의 실제 금액
+      } else {
+        amount = code.defaultAmount; // 아직 개별 설정 안 된 항목은 마스터 기본값 사용
+      }
+      return { name: code.name, amount, taxFree: code.taxFree, locked: code.locked };
+    });
   }
 
   function taxableIncome(){
@@ -109,9 +119,9 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${month}</td>
+          <td>${e.name}</td>
           <td>${e.dept}</td>
           <td>${e.jikchaek}</td>
-          <td>${e.name}</td>
           <td class="num">${fmt(estimatedPayTotal(e))}</td>
         `;
         tr.addEventListener('click', () => openDetail(e, month));
@@ -180,7 +190,7 @@
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><input class="payroll-row-name" data-idx="${idx}" data-field="name" value="${item.name}" ${item.locked ? 'disabled' : ''}></td>
-        <td><input class="payroll-row-amount" type="number" step="10000" data-idx="${idx}" data-field="amount" value="${item.amount}" ${item.locked ? 'disabled' : ''}></td>
+        <td><input class="payroll-row-amount" type="text" inputmode="numeric" data-idx="${idx}" data-field="amount" value="${formatNum(item.amount)}" ${item.locked ? 'disabled' : ''}></td>
         <td class="tag-col"><span class="payroll-tag ${item.taxFree ? 'on' : ''}" data-idx="${idx}">${item.taxFree ? '비과세' : '과세'}</span></td>
         <td class="del-col">${item.locked ? '' : `<button type="button" class="payroll-row-del" data-idx="${idx}">×</button>`}</td>
       `;
@@ -191,7 +201,13 @@
       el.addEventListener('input', (e) => {
         const idx = Number(e.target.dataset.idx);
         const field = e.target.dataset.field;
-        payItems[idx][field] = field === 'amount' ? (Number(e.target.value) || 0) : e.target.value;
+        if (field === 'amount') {
+          const value = parseNum(e.target.value);
+          payItems[idx].amount = value;
+          e.target.value = formatNum(value); // 입력 중에도 즉시 콤마 재적용 (커서는 끝으로 이동)
+        } else {
+          payItems[idx][field] = e.target.value;
+        }
         recalcDeductions();
       });
     });
@@ -323,12 +339,17 @@
     body.innerHTML = payItemCodes.map((code, idx) => `
       <div class="payitem-setting-row" data-idx="${idx}">
         <input type="text" class="pi-name" value="${code.name}" ${code.locked ? 'disabled' : ''}>
-        <input type="number" class="pi-amount" step="10000" value="${code.defaultAmount}" ${code.key === 'base' ? 'disabled placeholder="연봉÷12"' : ''}>
+        <input type="text" inputmode="numeric" class="pi-amount" value="${formatNum(code.defaultAmount)}" ${code.key === 'base' ? 'disabled placeholder="연봉÷12"' : ''}>
         <span class="payroll-tag pi-taxfree ${code.taxFree ? 'on' : ''}">${code.taxFree ? '비과세' : '과세'}</span>
         ${code.locked ? '<span></span>' : '<button type="button" class="payroll-row-del pi-del">×</button>'}
       </div>
     `).join('');
 
+    body.querySelectorAll('.pi-amount').forEach(el => {
+      el.addEventListener('input', (e) => {
+        e.target.value = formatNum(parseNum(e.target.value));
+      });
+    });
     body.querySelectorAll('.pi-taxfree').forEach(el => {
       el.addEventListener('click', () => {
         const idx = Number(el.closest('.payitem-setting-row').dataset.idx);
@@ -356,7 +377,7 @@
       const nameInput = row.querySelector('.pi-name');
       const amountInput = row.querySelector('.pi-amount');
       if (!payItemCodes[idx].locked) payItemCodes[idx].name = nameInput.value;
-      if (payItemCodes[idx].key !== 'base') payItemCodes[idx].defaultAmount = Number(amountInput.value) || 0;
+      if (payItemCodes[idx].key !== 'base') payItemCodes[idx].defaultAmount = parseNum(amountInput.value);
     });
     document.getElementById('pr-payitem-modal-overlay').classList.remove('open');
     renderList();
@@ -370,19 +391,46 @@
 
   function openSalarySetting(){
     const body = document.getElementById('pr-salary-modal-body');
-    body.innerHTML = employees.map((e, idx) => `
-      <div class="salary-setting-row" data-idx="${idx}">
-        <span class="emp-name">${e.name} (${e.dept})</span>
-        <input type="number" class="sal-input" step="100000" value="${e.annualSalary}">
-        <span class="monthly-hint" id="sal-hint-${idx}">${fmt(round10(e.annualSalary/12))}/월</span>
+    const allowanceCodes = payItemCodes.filter(c => c.key !== 'base');
+
+    const theadCols = '<th>직원</th><th>연봉</th><th>월 기본급</th>' +
+      allowanceCodes.map(c => `<th>${c.name}</th>`).join('');
+
+    const rows = employees.map((e, idx) => {
+      const cells = allowanceCodes.map(c => {
+        const val = e.allowances && e.allowances[c.key] !== undefined ? e.allowances[c.key] : c.defaultAmount;
+        return `<td><input type="text" inputmode="numeric" class="emp-allow-input" data-emp="${idx}" data-key="${c.key}" value="${formatNum(val)}"></td>`;
+      }).join('');
+      return `
+        <tr data-idx="${idx}">
+          <td class="emp-name-cell">${e.name}<span class="payroll-hint">${e.dept}</span></td>
+          <td><input type="text" inputmode="numeric" class="sal-input" data-idx="${idx}" value="${formatNum(e.annualSalary)}"></td>
+          <td class="monthly-hint" id="sal-hint-${idx}">${fmt(round10(e.annualSalary/12))}</td>
+          ${cells}
+        </tr>
+      `;
+    }).join('');
+
+    body.innerHTML = `
+      <div class="emp-item-table-wrap">
+        <table class="payroll-table emp-item-table">
+          <thead><tr>${theadCols}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
       </div>
-    `).join('');
+    `;
 
     body.querySelectorAll('.sal-input').forEach(input => {
       input.addEventListener('input', (e) => {
-        const idx = Number(e.target.closest('.salary-setting-row').dataset.idx);
-        const val = Number(e.target.value) || 0;
-        document.getElementById(`sal-hint-${idx}`).textContent = fmt(round10(val/12)) + '/월';
+        const idx = Number(e.target.dataset.idx);
+        const val = parseNum(e.target.value);
+        e.target.value = formatNum(val);
+        document.getElementById(`sal-hint-${idx}`).textContent = fmt(round10(val/12));
+      });
+    });
+    body.querySelectorAll('.emp-allow-input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        e.target.value = formatNum(parseNum(e.target.value));
       });
     });
 
@@ -390,15 +438,20 @@
   }
 
   function saveSalarySetting(){
-    document.querySelectorAll('#pr-salary-modal-body .salary-setting-row').forEach(row => {
-      const idx = Number(row.dataset.idx);
-      const input = row.querySelector('.sal-input');
-      employees[idx].annualSalary = Number(input.value) || 0;
+    document.querySelectorAll('#pr-salary-modal-body .sal-input').forEach(input => {
+      const idx = Number(input.dataset.idx);
+      employees[idx].annualSalary = parseNum(input.value);
+    });
+    document.querySelectorAll('#pr-salary-modal-body .emp-allow-input').forEach(input => {
+      const idx = Number(input.dataset.emp);
+      const key = input.dataset.key;
+      if (!employees[idx].allowances) employees[idx].allowances = {};
+      employees[idx].allowances[key] = parseNum(input.value);
     });
     document.getElementById('pr-salary-modal-overlay').classList.remove('open');
     renderList();
-    // TODO: 서버에 직원별 연봉 저장 API 연동 지점
-    // fetch('/api/employees/annual-salary', { method:'PUT', body: JSON.stringify(employees.map(e=>({id:e.id, annualSalary:e.annualSalary}))) })
+    // TODO: 서버에 직원별 연봉/지급항목 저장 API 연동 지점
+    // fetch('/api/employees/pay-settings', { method:'PUT', body: JSON.stringify(employees.map(e=>({id:e.id, annualSalary:e.annualSalary, allowances:e.allowances}))) })
   }
 
   /* -------------------------------------------------
