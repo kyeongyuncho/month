@@ -1,144 +1,163 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>업무포털(EIP)</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="payroll.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>개인정보 보호 낱말퀴즈</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 최상단 알림 스트립 -->
-  <div class="top-strip">
-    <span id="welcomeMsg">조경윤님 환영합니다.</span>
-    <span id="loginStatus">출근 시각: -- : -- : -- &nbsp;&nbsp;[로그인 만료:59:55]</span>
-  </div>
+<div class="app">
 
-  <!-- 헤더 -->
-  <header class="header">
-    <div class="header-left">
-      <button class="menu-toggle" id="sidebarToggle" aria-label="사이드바 열기/닫기"><span></span></button>
-      <div class="brand">
-        <div class="brand-logo">식</div>
-        <div class="brand-name">식생활안전관리원</div>
-      </div>
-    </div>
-
-    <div class="header-center">
-      <div class="header-divider"></div>
-      <div class="service-logo">
-        <div class="cci">C</div>
-        <div class="service-title">
-          <div class="kr">어린이·사회복지급식관리지원센터</div>
-          <div class="en">Center for Children's and Social Welfare Foodservice Management</div>
-        </div>
-      </div>
-      <div class="portal-tag">업무포털(EIP)</div>
-    </div>
-
-    <nav class="header-right">
-      <button class="icon-btn active" id="btnCheckin">
-        <span class="icon-circle">⏻</span>출근
-      </button>
-      <button class="icon-btn"><span class="icon-circle">✉</span>이메일</button>
-      <button class="icon-btn"><span class="icon-circle">🌐</span>그룹웨어</button>
-      <button class="icon-btn"><span class="icon-circle">🎓</span>LMS</button>
-      <button class="icon-btn"><span class="icon-circle">🍽</span>식단작성</button>
-      <button class="icon-btn"><span class="icon-circle">🔒</span>SSO</button>
-      <button class="icon-btn"><span class="icon-circle">📇</span>관리자</button>
-      <button class="icon-btn"><span class="icon-circle">☆</span>즐겨찾기</button>
-      <button class="icon-btn" id="btnLogout"><span class="icon-circle">⎋</span>로그아웃</button>
-    </nav>
-  </header>
-
-  <!-- 상단 탭 -->
-  <div class="tab-bar" id="tabBar">
-    <div class="tab" data-tab="dashboard">대시보드</div>
-    <div class="tab active" data-tab="center-info">센터정보관리 <span class="close">×</span></div>
-  </div>
-
-  <div class="app-body">
-
-    <!-- 좌측 메인 사이드바 -->
-    <aside class="sidebar" id="sidebar">
-      <div class="profile-card">
-        <span class="profile-settings">⚙</span>
-        <div class="profile-avatar">👤</div>
-        <div class="profile-name">조경윤(ky0335)</div>
-        <div class="profile-meta">
-          식생활안전관리원<br>
-          경영기획팀 / 팀원
-        </div>
-        <div class="attend-row">
-          <button class="attend-btn checkin" id="checkinBtn">출근 --:--</button>
-          <button class="attend-btn" id="checkoutBtn">퇴근 --:--</button>
-        </div>
-        <div class="work-info">
-          근무유형: <b>정상근무</b><br>
-          근무시간: <b>09:00 ~ 18:00</b><br>
-          등록 IP 주소: 172.16.10.28<br>
-          접속 IP 주소: 172.16.10.28
-        </div>
-      </div>
-
-      <div class="nav-section-title" data-target="navAdmin">
-        <span>행정</span><span class="chev">▾</span>
-      </div>
-      <ul class="nav-list" id="navAdmin">
-        <li class="nav-item active">센터정보관리</li>
-        <li class="nav-item">사용자 관리</li>
-        <li class="nav-item">인사정보 관리</li>
-        <li class="nav-item">인사발령 관리</li>
-        <li class="nav-item">나의 인사정보</li>
-        <li class="nav-item">증명서 발급</li>
-        <li class="nav-item">비상연락망</li>
-        <li class="nav-item">면허증·자격증 현황</li>
-        <li class="nav-item">이용약관 및 처리지침</li>
-      </ul>
-    </aside>
-
-    <!-- 메인 컨텐츠 -->
-    <main class="main-content">
-      <div class="content-frame">
-        <div class="breadcrumb-bar">
-          <span>&lt;</span>
-          <span>센터 정보 관리 : 식생활안전관리원</span>
-        </div>
-
-        <div class="content-body">
-          <!-- 서브 메뉴: 여기 항목을 추가/수정하며 기능을 확장 -->
-          <nav class="sub-menu" id="subMenu">
-            <div class="sub-menu-item" data-panel="basic">기본 정보</div>
-            <div class="sub-menu-item" data-panel="profile">센터장 프로필</div>
-            <div class="sub-menu-item" data-panel="dept">센터 부서</div>
-            <div class="sub-menu-item active" data-panel="staff">센터 담당자</div>
-            <div class="sub-menu-item" data-panel="flextime">근무시간(유연근무)</div>
-            <div class="sub-menu-item" data-panel="special">특화사업</div>
-            <div class="sub-menu-item" data-panel="holiday">임시공휴일 관리</div>
-            <div class="sub-menu-item" data-panel="grace">출근유예 관리</div>
-            <div class="sub-menu-item" data-panel="ip">접속 IP 관리</div>
-            <div class="sub-menu-item" data-panel="concurrent">겸직 센터 관리</div>
-            <div class="sub-menu-item" data-panel="changelog">등록변경사항</div>
-            <div class="sub-menu-item" data-panel="payroll">급여 관리</div>
-          </nav>
-
-          <!-- 실제 기능 패널: 앞으로 계속 채워나갈 영역 -->
-          <section class="panel">
-            <div class="panel-heading" id="panelTitle">센터 담당자</div>
-            <div id="panel-content">
-              <div class="placeholder-box">
-                여기에 "센터 담당자" 표/기능을 계속 추가해 나가면 됩니다.<br>
-                (id="panel-content" 안에 원하는 HTML을 채워 넣으세요)
-              </div>
+    <!-- 닉네임 입력 -->
+    <section id="nicknameScreen" class="screen">
+        <div class="entry-hero">
+            <div class="privacy-illustration" aria-hidden="true">
+                <div class="illustration-glow"></div>
+                <div class="shield">
+                    <svg viewBox="0 0 120 140" role="img">
+                        <path d="M60 8 L103 24 V60 C103 91 85 116 60 130 C35 116 17 91 17 60 V24 Z" fill="none" stroke="currentColor" stroke-width="7"/>
+                        <path d="M43 65 V51 C43 41 50 34 60 34 C70 34 77 41 77 51 V65" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+                        <rect x="37" y="61" width="46" height="38" rx="8" fill="currentColor"/>
+                        <circle cx="60" cy="79" r="5" fill="white"/>
+                        <path d="M60 84 V91" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="privacy-dot dot-1">●</span>
+                <span class="privacy-dot dot-2">●</span>
+                <span class="privacy-dot dot-3">●</span>
             </div>
-          </section>
-        </div>
-      </div>
-    </main>
-  </div>
 
-<script src="payroll.js"></script>
-<script src="script.js"></script>
+            <div class="privacy-badge">🔐 PRIVACY QUIZ 2026</div>
+            <h1>개인정보 보호<br><strong>가로세로 낱말퀴즈</strong></h1>
+            <p>개인정보를 얼마나 잘 알고 있을까요?<br>문제를 풀고 가장 빠른 정답에 도전해보세요!</p>
+        </div>
+
+        <div class="nickname-card">
+            <label for="nicknameInput">참가자 닉네임</label>
+            <input type="text" id="nicknameInput" maxlength="10" placeholder="닉네임을 입력하세요" autocomplete="off">
+            <button id="nicknameButton" class="primary-button">퀴즈 입장 →</button>
+            <p class="entry-note">※ 닉네임은 퀴즈 순위에 표시됩니다.</p>
+        </div>
+    </section>
+
+    <!-- 대기 화면 -->
+    <section id="waitingScreen" class="screen hidden">
+        <div class="waiting-hero">
+            <div class="waiting-illustration" aria-hidden="true">
+                <div class="waiting-ring ring-1"></div>
+                <div class="waiting-ring ring-2"></div>
+                <div class="waiting-shield">🛡️</div>
+                <div class="waiting-lock">🔒</div>
+            </div>
+            <div class="privacy-badge">🔐 개인정보 보호주간</div>
+            <h2>퀴즈 시작을<br><strong>기다리고 있어요!</strong></h2>
+            <p>관리자가 첫 문제를 시작하면<br>자동으로 퀴즈가 시작됩니다.</p>
+        </div>
+
+        <div class="waiting-card">
+            <div class="waiting-status"><span></span> 현재 대기 중</div>
+            <div class="waiting-participant">
+                <span>참가자</span>
+                <strong id="waitingNickname"></strong>
+            </div>
+            <div class="waiting-tip">💡 개인정보는 소중하게!<br>잠시 후 문제에서 만나요.</div>
+        </div>
+    </section>
+
+    <!-- 퀴즈 화면 -->
+    <section id="quizScreen" class="screen hidden">
+        <header class="quiz-header">
+            <div>
+                <div class="quiz-title">🔐 개인정보 보호 낱말퀴즈</div>
+                <div class="quiz-status"><span id="currentQuestionLabel">문제를 준비하고 있습니다.</span></div>
+            </div>
+            <div class="ranking-mini">
+                <div class="ranking-title">🏆 실시간 TOP 5</div>
+                <div id="topRanking">-</div>
+            </div>
+        </header>
+
+        <div class="my-score-bar">
+            <span><strong id="myNickname"></strong></span>
+            <span>현재 점수 <strong id="myScore">0</strong>점</span>
+        </div>
+
+        <main>
+            <div class="puzzle-card">
+                <div id="puzzleGrid" class="puzzle-grid"></div>
+            </div>
+
+            <section class="question-card">
+                <div id="questionNumber" class="question-number">문제를 선택해주세요</div>
+                <div id="questionText" class="question-text">퍼즐의 칸을 클릭하면 문제가 나타납니다.</div>
+                <div class="answer-area">
+                    <input type="text" id="answerInput" class="answer-input" placeholder="정답을 입력하세요" autocomplete="off">
+                    <button type="button" id="answerButton" class="answer-button">입력</button>
+                </div>
+                <div id="answerMessage" class="answer-message"></div>
+            </section>
+        </main>
+    </section>
+
+    <!-- 최종 결과 -->
+    <section id="resultScreen" class="screen hidden">
+        <div class="result-hero">
+            <div class="result-confetti">✦　✧　✦</div>
+            <div class="result-icon">🏆</div>
+            <div class="privacy-badge">QUIZ COMPLETE</div>
+            <h2>수고하셨습니다!</h2>
+            <p><strong id="resultNickname"></strong>님의 최종 결과입니다.</p>
+        </div>
+
+        <div class="my-final-rank-card">
+            <div class="my-final-rank-label">나의 최종 순위</div>
+            <div class="my-final-rank"><strong id="resultRank">-</strong><span>위</span></div>
+            <div class="my-final-score"><span>최종 점수</span><strong id="resultScore">0</strong><span>점</span></div>
+        </div>
+
+        <div class="final-ranking-card">
+            <div class="final-ranking-title">
+                <div><span>🏆</span><strong>전체 순위</strong></div>
+                <small>최종 점수 기준</small>
+            </div>
+            <div id="finalRanking">-</div>
+        </div>
+    </section>
+
+</div>
+
+<!-- 정답 팝업 -->
+<div id="correctModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="correctModalTitle">
+    <div class="modal-content">
+        <button id="correctModalClose" class="modal-close" type="button" aria-label="닫기">×</button>
+        <div class="modal-burst">🎉</div>
+        <div class="modal-label">정답입니다!</div>
+        <h2 id="correctModalTitle">완벽해요!</h2>
+        <p id="correctScore" class="modal-score">+10점 획득</p>
+        <p id="correctRank" class="modal-rank">현재 1등</p>
+        <button id="correctModalOk" class="modal-button" type="button">확인</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ok = document.getElementById('correctModalOk');
+        const close = document.getElementById('correctModalClose');
+        const modal = document.getElementById('correctModal');
+        if (ok) ok.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        });
+        if (close) close.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        });
+    });
+</script>
+
+<script src="./puzzle.js"></script>
+<script type="module" src="./app.js"></script>
 </body>
 </html>
