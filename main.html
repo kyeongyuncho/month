@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>예산관리</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="card-header">
+            예산 등록
+        </div>
+
+        <div class="budget-form">
+
+            <select id="year"></select>
+
+            <select id="majorProject"></select>
+
+            <select id="middleProject">
+                <option value="">주요사업 선택</option>
+            </select>
+
+            <select id="minorProject">
+                <option value="">세부사업 선택</option>
+            </select>
+
+            <select id="category"></select>
+
+            <select id="subCategory">
+                <option value="">보조세목 선택</option>
+            </select>
+
+            <input
+                type="text"
+                id="amount"
+                placeholder="예산액"
+            >
+
+            <button id="saveBtn">
+                저장
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+            등록 목록
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>연도</th>
+                    <th>구분</th>
+                    <th>주요사업</th>
+                    <th>세부사업</th>
+                    <th>보조비목</th>
+                    <th>보조세목</th>
+                    <th>예산액</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+
+            <tbody id="budgetBody"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

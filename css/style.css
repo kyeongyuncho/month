@@ -1,0 +1,93 @@
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:20px;
+    background:#f5f7fa;
+    font-family:"맑은 고딕", sans-serif;
+}
+
+.container{
+    width:95%;
+    margin:auto;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.card-header{
+    padding:15px;
+    font-weight:bold;
+    background:#f3f6fb;
+    border-bottom:1px solid #ddd;
+}
+
+.budget-form{
+    display:flex;
+    gap:10px;
+    padding:15px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+.budget-form select{
+    flex:1;
+    min-width:140px;
+    height:38px;
+}
+
+#amount{
+    flex:1.2;
+    min-width:180px;
+    height:38px;
+    text-align:right;
+    padding-right:10px;
+}
+
+#saveBtn{
+    width:80px;
+    height:38px;
+    background:#2f6fd4;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#f8fafc;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.edit-btn{
+    background:#28a745;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+}

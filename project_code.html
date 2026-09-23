@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>사업코드 관리</title>
+    <link rel="stylesheet" href="css/code_style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="card-header">
+            사업코드 등록
+        </div>
+
+        <div class="code-form">
+
+            <input
+                type="text"
+                id="majorName"
+                placeholder="구분"
+            >
+
+            <input
+                type="text"
+                id="middleName"
+                placeholder="주요사업"
+            >
+
+            <input
+                type="text"
+                id="minorName"
+                placeholder="세부사업"
+            >
+
+            <input
+                type="text"
+                id="budgetAmount"
+                placeholder="예산액"
+                oninput="formatAmount(this)"
+            >
+
+            <button onclick="saveProjectCode()">
+                저장
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+            사업코드 목록
+        </div>
+
+        <table class="code-table">
+
+            <thead>
+                <tr>
+                    <th>구분</th>
+                    <th>주요사업</th>
+                    <th>세부사업</th>
+                    <th>예산액</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+
+            <tbody id="projectBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="js/code_script.js"></script>
+
+</body>
+</html>

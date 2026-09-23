@@ -1,0 +1,41 @@
+.code-form{
+    display:flex;
+    gap:10px;
+    padding:20px;
+    align-items:center;
+}
+
+.code-form input{
+    flex:1;
+    height:38px;
+    padding:0 10px;
+    border:1px solid #cfd6dd;
+    border-radius:4px;
+}
+
+.code-form button{
+    height:38px;
+    padding:0 20px;
+    border:none;
+    background:#2f6fd4;
+    color:white;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.code-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.code-table th{
+    background:#f8fafc;
+    border:1px solid #dce3eb;
+    padding:12px;
+}
+
+.code-table td{
+    border:1px solid #dce3eb;
+    padding:10px;
+    text-align:center;
+}
