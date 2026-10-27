@@ -1,147 +1,438 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>업무포털(EIP)</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="payroll.css">
-</head>
-<body>
-
-  <!-- 최상단 알림 스트립 -->
-  <div class="top-strip">
-    <span id="welcomeMsg">조경윤님 환영합니다.</span>
-    <span id="loginStatus">출근 시각: -- : -- : -- &nbsp;&nbsp;[로그인 만료:59:55]</span>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   업무포털(EIP) - 급여관리 시제품
+  </title>
+  <link href="css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="topline">
+   <span>
+    ●   조경윤님 환영합니다.
+   </span>
+   <span>
+    출근 시각: 2026-10-27 08:49:01   [로그인 만료:59:56]   PM 04:02:16
+   </span>
   </div>
-
-  <!-- 헤더 -->
   <header class="header">
-    <div class="header-left">
-      <button class="menu-toggle" id="sidebarToggle" aria-label="사이드바 열기/닫기"><span></span></button>
-      <div class="brand">
-        <div class="brand-logo">식</div>
-        <div class="brand-name">식생활안전관리원</div>
-      </div>
-    </div>
-
-    <div class="header-center">
-      <div class="header-divider"></div>
-      <div class="service-logo">
-        <div class="cci">C</div>
-        <div class="service-title">
-          <div class="kr">어린이·사회복지급식관리지원센터</div>
-          <div class="en">Center for Children's and Social Welfare Foodservice Management</div>
-
-      </div>
-      <div class="portal-tag">업무포털(EIP)</div>
-    </div>
-
-    <nav class="header-right">
-      <button class="icon-btn active" id="btnCheckin">
-        <span class="icon-circle">⏻</span>출근
-      </button>
-      <button class="icon-btn"><span class="icon-circle">✉</span>이메일</button>
-      <button class="icon-btn"><span class="icon-circle">🌐</span>그룹웨어</button>
-      <button class="icon-btn"><span class="icon-circle">🎓</span>LMS</button>
-      <button class="icon-btn"><span class="icon-circle">🍽</span>식단작성</button>
-      <button class="icon-btn"><span class="icon-circle">🔒</span>SSO</button>
-      <button class="icon-btn"><span class="icon-circle">📇</span>관리자</button>
-      <button class="icon-btn"><span class="icon-circle">☆</span>즐겨찾기</button>
-      <button class="icon-btn" id="btnLogout"><span class="icon-circle">⎋</span>로그아웃</button>
-    </nav>
+   <div class="brand">
+    <b>
+     ▥
+    </b>
+    식생활안전관리원
+   </div>
+   <div class="centerbrand">
+    🟠 어린이·사회복지급식관리지원센터 | 업무포털(EIP)
+   </div>
+   <div class="actions">
+    <span>
+     <strong style="color:#21b257">
+      ⏻
+     </strong>
+     출근
+    </span>
+    <span>
+     <strong>
+      ✉
+     </strong>
+     이메일
+    </span>
+    <span>
+     <strong>
+      ✎
+     </strong>
+     그룹웨어
+    </span>
+    <span>
+     <strong>
+      ▤
+     </strong>
+     LMS
+    </span>
+    <span>
+     <strong>
+      ▦
+     </strong>
+     식단작성
+    </span>
+    <span>
+     <strong>
+      ♙
+     </strong>
+     관리자
+    </span>
+   </div>
   </header>
-
-  <!-- 상단 탭 -->
-  <div class="tab-bar" id="tabBar">
-    <div class="tab" data-tab="dashboard">대시보드</div>
-    <div class="tab active" data-tab="center-info">센터정보관리 <span class="close">×</span></div>
-  </div>
-
-  <div class="app-body">
-
-    <!-- 좌측 메인 사이드바 -->
-    <aside class="sidebar" id="sidebar">
-      <div class="profile-card">
-        <span class="profile-settings">⚙</span>
-        <div class="profile-avatar">👤</div>
-        <div class="profile-name">조경윤(ky0335)</div>
-        <div class="profile-meta">
-          식생활안전관리원<br>
-          경영기획팀 / 팀원
+  <div class="layout">
+   <aside class="left">
+    <div class="profile">
+     <div class="avatar">
+      ●
+     </div>
+     <b>
+      조경윤(ky0335)
+     </b>
+     <small>
+      식생활안전관리원
+      <br/>
+      경영기획팀 / 팀원
+     </small>
+    </div>
+    <div class="attendance">
+     <b>
+      출근
+     </b>
+     08:49
+     <span class="muted">
+      퇴근 --:--
+     </span>
+     <hr/>
+     근무유형: 정상근무
+     <br/>
+     근무시간: 09:00 ~ 18:00
+    </div>
+    <div class="nav">
+     대시보드
+    </div>
+    <div class="section">
+     행정　⌄
+    </div>
+    <div class="nav">
+     · 센터정보관리
+    </div>
+    <div class="nav">
+     · 사용자 관리
+    </div>
+    <div class="nav active">
+     · 인사정보 관리
+    </div>
+    <div class="nav">
+     · 인사발령 관리
+    </div>
+    <div class="nav">
+     · 나의 인사정보
+    </div>
+    <div class="nav">
+     · 증명서 발급
+    </div>
+    <div class="nav">
+     · 비상연락망
+    </div>
+   </aside>
+   <main class="work">
+    <div class="tabs">
+     <div class="tab">
+      대시보드
+     </div>
+     <div class="tab">
+      문의하기(Q&amp;A)
+     </div>
+     <div class="tab">
+      사이트 오류 및 기능개선
+     </div>
+     <div class="tab">
+      시설정보관리
+     </div>
+     <div class="tab">
+      체크리스트관리
+     </div>
+     <div class="tab">
+      일일 출/퇴근 현황
+     </div>
+     <div class="tab selected">
+      인사정보 관리
+     </div>
+     <div class="tab">
+      급여관리 ×
+     </div>
+    </div>
+    <div class="content">
+     <div class="banner">
+      〈   인사 정보 관리 : 식생활안전관리원 - 조경윤 (101002024012)
+     </div>
+     <div class="inner">
+      <nav class="submenu" id="submenu">
+      </nav>
+      <section class="page">
+       <h2 id="pageTitle">
+        급여관리
+       </h2>
+       <div id="payroll">
+        <div class="toolbar">
+         <div class="filters">
+          <label for="year">
+           급여 기준월
+          </label>
+          <select id="year">
+          </select>
+          <select id="month">
+          </select>
+          <button class="btn primary" id="load">
+           조회
+          </button>
+         </div>
+         <span class="muted">
+          ※ 본 화면은 기능 검토용 시제품입니다.
+         </span>
         </div>
-        <div class="attend-row">
-          <button class="attend-btn checkin" id="checkinBtn">출근 --:--</button>
-          <button class="attend-btn" id="checkoutBtn">퇴근 --:--</button>
-           </div>
-        <div class="work-info">
-          근무유형: <b>정상근무</b><br>
-          근무시간: <b>09:00 ~ 18:00</b><br>
-          등록 IP 주소: 172.16.10.28<br>
-          접속 IP 주소: 172.16.10.28
-
-             </div>
-      </div>
-
-      <div class="nav-section-title" data-target="navAdmin">
-        <span>행정</span><span class="chev">▾</span>
-      </div>
-      <ul class="nav-list" id="navAdmin">
-        <li class="nav-item active">센터정보관리</li>
-        <li class="nav-item">사용자 관리</li>
-        <li class="nav-item">인사정보 관리</li>
-        <li class="nav-item">인사발령 관리</li>
-        <li class="nav-item">나의 인사정보</li>
-        <li class="nav-item">증명서 발급</li>
-        <li class="nav-item">비상연락망</li>
-        <li class="nav-item">면허증·자격증 현황</li>
-        <li class="nav-item">이용약관 및 처리지침</li>
-      </ul>
-    </aside>
-
-    <!-- 메인 컨텐츠 -->
-    <main class="main-content">
-      <div class="content-frame">
-        <div class="breadcrumb-bar">
-          <span>&lt;</span>
-          <span>센터 정보 관리 : 식생활안전관리원</span>
+        <div class="panel">
+         <h3>
+          · 기본 급여정보
+         </h3>
+         <div class="grid">
+          <div class="field wide">
+           <label>
+            사원번호
+           </label>
+           <span>
+            101002024012
+           </span>
           </div>
-
-        <div class="content-body">
-          <!-- 서브 메뉴: 여기 항목을 추가/수정하며 기능을 확장 -->
-          <nav class="sub-menu" id="subMenu">
-            <div class="sub-menu-item" data-panel="basic">기본 정보</div>
-            <div class="sub-menu-item" data-panel="profile">센터장 프로필</div>
-            <div class="sub-menu-item" data-panel="dept">센터 부서</div>
-            <div class="sub-menu-item active" data-panel="staff">센터 담당자</div>
-            <div class="sub-menu-item" data-panel="flextime">근무시간(유연근무)</div>
-            <div class="sub-menu-item" data-panel="special">특화사업</div>
-            <div class="sub-menu-item" data-panel="holiday">임시공휴일 관리</div>
-            <div class="sub-menu-item" data-panel="grace">출근유예 관리</div>
-            <div class="sub-menu-item" data-panel="ip">접속 IP 관리</div>
-            <div class="sub-menu-item" data-panel="concurrent">겸직 센터 관리</div>
-            <div class="sub-menu-item" data-panel="changelog">등록변경사항</div>
-            <div class="sub-menu-item" data-panel="payroll">급여 관리</div>
-          </nav>
-
-          <!-- 실제 기능 패널: 앞으로 계속 채워나갈 영역 -->
-          <section class="panel">
-            <div class="panel-heading" id="panelTitle">센터 담당자</div>
-            <div id="panel-content">
-              <div class="placeholder-box">
-                여기에 "센터 담당자" 표/기능을 계속 추가해 나가면 됩니다.<br>
-                (id="panel-content" 안에 원하는 HTML을 채워 넣으세요)
-              </div>
-     
-            </div>
-          </section>
+          <div class="field wide">
+           <label>
+            성명
+           </label>
+           <span>
+            조경윤
+           </span>
+          </div>
+          <div class="field wide">
+           <label>
+            소속
+           </label>
+           <span>
+            경영기획팀
+           </span>
+          </div>
+          <div class="field wide">
+           <label>
+            급여 산정방식
+           </label>
+           <span>
+            연봉 ÷ 12 (시제품 가정)
+           </span>
+          </div>
+          <div class="field wide">
+           <label for="annual">
+            연봉(원)
+           </label>
+           <input id="annual" min="0" step="10000" type="number" value="48000000"/>
+          </div>
+          <div class="field wide">
+           <label>
+            기본 월급(원)
+           </label>
+           <span id="base">
+            4,000,000
+           </span>
+          </div>
+         </div>
         </div>
-      </div>
-    </main>
+        <div class="summary">
+         <div class="stat">
+          <small>
+           지급총액
+          </small>
+          <strong id="gross">
+           0원
+          </strong>
+         </div>
+         <div class="stat">
+          <small>
+           공제총액
+          </small>
+          <strong id="deduct">
+           0원
+          </strong>
+         </div>
+         <div class="stat net">
+          <small>
+           예상 실수령액
+          </small>
+          <strong id="net">
+           0원
+          </strong>
+         </div>
+        </div>
+        <div class="columns">
+         <div class="panel">
+          <h3>
+           · 지급항목
+          </h3>
+          <table class="moneytable">
+           <tbody>
+            <tr>
+             <th>
+              기본 월급
+             </th>
+             <td class="value" id="baseRow">
+             </td>
+            </tr>
+            <tr>
+             <th>
+              초과근무 시간
+             </th>
+             <td>
+              <input id="overtimeHours" min="0" step="0.5" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              초과근무 시급(원)
+             </th>
+             <td>
+              <input id="overtimeRate" min="0" type="number" value="20000"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              초과근무 배율
+             </th>
+             <td>
+              <input id="overtimeMultiplier" min="0" step="0.1" type="number" value="1.5"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              초과근무수당(자동)
+             </th>
+             <td class="value" id="overtimePay">
+             </td>
+            </tr>
+            <tr>
+             <th>
+              식대(원)
+             </th>
+             <td>
+              <input id="meal" min="0" type="number" value="200000"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              기타수당(원)
+             </th>
+             <td>
+              <input id="allowance" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr class="total">
+             <th>
+              지급총액
+             </th>
+             <td class="value" id="grossRow">
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+         <div class="panel">
+          <h3>
+           · 공제항목
+          </h3>
+          <table class="moneytable">
+           <tbody>
+            <tr>
+             <th>
+              국민연금(원)
+             </th>
+             <td>
+              <input id="pension" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              건강보험(원)
+             </th>
+             <td>
+              <input id="health" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              장기요양보험(원)
+             </th>
+             <td>
+              <input id="care" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              고용보험(원)
+             </th>
+             <td>
+              <input id="employment" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              소득세(원)
+             </th>
+             <td>
+              <input id="tax" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              지방소득세(원)
+             </th>
+             <td>
+              <input id="localTax" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              기타공제(원)
+             </th>
+             <td>
+              <input id="otherDeduct" min="0" type="number" value="0"/>
+             </td>
+            </tr>
+            <tr class="total">
+             <th>
+              공제총액
+             </th>
+             <td class="value" id="deductRow">
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+        </div>
+        <div class="note">
+         ※ 실제 급여 지급용 계산기가 아닌 화면설계 시제품입니다. 초과근무 시급·배율은 예시 입력값이며, 보험료·세금은 자동 산정하지 않고 담당자가 입력합니다. 연봉에 포함되는 수당의 범위 및 기관별 보수규정은 별도 확정이 필요합니다.
+        </div>
+        <div class="bottom">
+         <button class="btn gray" id="reset">
+          초기화
+         </button>
+         <button class="btn" id="csv">
+          CSV 내보내기
+         </button>
+         <button class="btn primary" id="save">
+          해당 월 저장
+         </button>
+        </div>
+       </div>
+       <div id="placeholder" style="display:none">
+        <p>
+         선택한 메뉴의 화면은 추후 설계할 수 있습니다.
+        </p>
+        <button class="btn primary" id="goPayroll">
+         급여관리로 이동
+        </button>
+       </div>
+      </section>
+     </div>
+    </div>
+   </main>
   </div>
-
-<script src="payroll.js"></script>
-<script src="script.js"></script>
-     
-</body>
+  <div class="toast" id="toast">
+  </div>
+  <script defer="" src="js/app.js">
+  </script>
+ </body>
 </html>
+
